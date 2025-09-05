@@ -1,0 +1,115 @@
+import json
+
+knowledge_sections = {
+    "VLOOKUP": {
+        "questions": [
+            {
+                "id": 1,
+                "question": "What is the purpose of VLOOKUP and what is its syntax?",
+                "answer": "VLOOKUP is used to search for a value in the first column of a table and return a value in the same row from another column. The syntax is VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup]). It's essential for combining data from different tables."
+            },
+            {
+                "id": 2,
+                "question": "Give a practical example of using VLOOKUP.",
+                "answer": "A practical example is: VLOOKUP(\"John\", A2:D10, 2, FALSE) which looks for \"John\" in the first column and returns the corresponding value from the second column. The FALSE parameter ensures an exact match."
+            }
+        ]
+    },
+    "INDEX_MATCH": {
+        "questions": [
+            {
+                "id": 3,
+                "question": "How does INDEX MATCH differ from VLOOKUP and what is its advantage?",
+                "answer": "INDEX MATCH is more flexible than VLOOKUP as it can look up values in any column, not just the leftmost column. This makes it more versatile for complex lookups and helps avoid restructuring data to accommodate VLOOKUP's limitations."
+            },
+            {
+                "id": 4,
+                "question": "Explain the syntax of INDEX MATCH with an example.",
+                "answer": "The syntax is INDEX(return_array, MATCH(lookup_value, lookup_array, 0)). For example: INDEX(C2:C10, MATCH(\"John\", A2:A10, 0)) finds \"John\" in column A and returns the corresponding value from column C."
+            }
+        ]
+    },
+    "PIVOT_TABLES": {
+        "questions": [
+            {
+                "id": 5,
+                "question": "What are Pivot Tables and how do you create one?",
+                "answer": "Pivot Tables are used to summarize and analyze large datasets. To create one: 1) Select data range 2) Insert > Pivot Table 3) Drag fields to Rows/Columns/Values. Best practice includes cleaning data first and using proper naming conventions."
+            }
+        ]
+    },
+    "BEST_PRACTICES": {
+        "questions": [
+            {
+                "id": 6,
+                "question": "What are the key best practices for Excel formulas?",
+                "answer": "Key Excel formula best practices include: 1) Use absolute references ($) when formula needs to be copied, 2) Break complex formulas into smaller parts using named ranges, 3) Use IFERROR to handle potential errors gracefully, 4) Document complex formulas with cell comments."
+            }
+        ]
+    },
+    "DATA_VALIDATION": {
+        "questions": [
+            {
+                "id": 7,
+                "question": "How can you use Data Validation in Excel and what are its common applications?",
+                "answer": "Data validation ensures data integrity, accessed via Data > Data Validation. Common uses include creating drop-down lists, restricting input types, and setting value ranges. An example is using =INDIRECT(\"Options!A1:A10\") to create a dropdown list from a named range."
+            }
+        ]
+    },
+    "EXCEL_FUNCTIONS": {
+        "questions": [
+            {
+                "id": 8,
+                "question": "List and explain the main categories of Excel functions.",
+                "answer": "Excel functions are categorized into: 1) Logical: IF, AND, OR, NOT, 2) Text: LEFT, RIGHT, MID, CONCATENATE, 3) Math: SUM, AVERAGE, COUNT, ROUNDUP, 4) Date: TODAY, NOW, NETWORKDAYS, WORKDAY, 5) Lookup: VLOOKUP, HLOOKUP, INDEX, MATCH."
+            }
+        ]
+    },
+    "SHORTCUTS": {
+        "questions": [
+            {
+                "id": 9,
+                "question": "What are some essential Excel keyboard shortcuts?",
+                "answer": "Essential Excel shortcuts include: Ctrl + 1 for Format cells, Ctrl + Shift + L to Toggle filters, Alt + = for AutoSum, F4 to Toggle absolute/relative references, and Ctrl + Arrow keys to Navigate to data boundaries."
+            }
+        ]
+    },
+    "FILE_MANAGEMENT": {
+        "questions": [
+            {
+                "id": 10,
+                "question": "What are the best practices for Excel file management and data security?",
+                "answer": "Excel file management best practices include: 1) Use Tables (Ctrl + T) for dynamic ranges, 2) Save frequently and enable AutoRecover, 3) Use Sheet Protection for sensitive data, 4) Make regular backups of important workbooks."
+            }
+        ]
+    },
+    "ADVANCED_CONCEPTS": {
+        "questions": [
+            {
+                "id": 11,
+                "question": "What are some advanced Excel features and their uses?",
+                "answer": "Advanced Excel features include: 1) Power Query for data transformation, 2) Power Pivot for data modeling, 3) DAX for advanced calculations, 4) Excel VBA for automation, 5) Dynamic Arrays with SPILL functionality."
+            }
+        ]
+    },
+    "DATA_ANALYSIS": {
+        "questions": [
+            {
+                "id": 12,
+                "question": "What tools and techniques are available in Excel for data analysis?",
+                "answer": "Excel offers various data analysis tools including: 1) Descriptive Statistics using Data Analysis ToolPak, 2) Regression Analysis, 3) Correlation Analysis, 4) Moving Averages, 5) Goal Seek and Solver for optimization."
+            }
+        ]
+    }
+}
+
+# Flatten questions into a list
+questions = []
+for section in knowledge_sections.values():
+    questions.extend(section["questions"])
+
+# Write to questions.json
+with open("questions.json", "w") as f:
+    json.dump(questions, f, indent=2)
+
+print(f"Generated {len(questions)} questions in questions.json")

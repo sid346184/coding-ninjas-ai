@@ -5,3 +5,7 @@ openai
 pydantic
 python-dotenv
 langchain_groq
+langchain-google-genai
+google-generativeai
+faiss-cpu
+numpy

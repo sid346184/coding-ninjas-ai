@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
 // Configure axios defaults
-axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = 'http://192.168.29.192:8000';
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.withCredentials = true;
 
@@ -47,7 +47,7 @@ export default function Report() {
         <p>No report found for this session.</p>
         <button
           onClick={() => navigate('/')}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+          className="mt-4 px-4 py-2 bg-[rgb(245,108,59)] text-white rounded"
         >
           Start New Interview
         </button>
@@ -126,7 +126,7 @@ export default function Report() {
             <div className="mt-8 text-center">
               <button
                 onClick={() => navigate('/')}
-                className="px-8 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 shadow-md"
+                className="cursor-pointer px-8 py-3 bg-[rgb(245,108,59)] text-white rounded-lg font-semibold hover:bg-[rgb(246,141,103)] transition-colors duration-200 shadow-md"
               >
                 Start New Interview
               </button>
