@@ -12,12 +12,10 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "http://127.0.0.1:5173",
-        "http://192.168.29.192:5173",
         "http://0.0.0.0:5173",
         "capacitor://localhost",
         "http://localhost",
     ],
-    allow_origin_regex="http://192\.168\.29\.\d+:5173",
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["Content-Type", "Authorization", "Accept"],
