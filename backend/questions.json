@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "question": "How do you use VLOOKUP to combine two tables?",
+    "answer": "VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])"
+  },
+  {
+    "id": 2,
+    "question": "Explain the difference between absolute ($A$1) and relative (A1) cell references.",
+    "answer": "Absolute references stay fixed when copied, relative references adjust based on position."
+  },
+  {
+    "id": 3,
+    "question": "What does the PivotTable feature allow you to do?",
+    "answer": "Summarize, analyze, and visualize data interactively by grouping and aggregating."
+  }
+]
