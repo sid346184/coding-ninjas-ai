@@ -15,6 +15,7 @@ app.add_middleware(
         "http://0.0.0.0:5173",
         "capacitor://localhost",
         "http://localhost",
+        "https://coding-ninjas-cwuj8zrqt-sid346184s-projects.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],

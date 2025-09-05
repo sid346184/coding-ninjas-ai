@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 // Configure axios defaults
-axios.defaults.baseURL = 'http://4.240.112.91:8000';
+axios.defaults.baseURL = 'http://4.240.112.91:8000/';  // Replace with your Azure HTTPS URL
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.withCredentials = true;
 
