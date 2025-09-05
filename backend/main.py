@@ -15,7 +15,7 @@ app.add_middleware(
         "http://0.0.0.0:5173",
         "capacitor://localhost",
         "http://localhost",
-        "http://coding-ninjas-ai.vercel.app",
+        "https://coding-ninjas-ai.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
