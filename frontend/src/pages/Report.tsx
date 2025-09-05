@@ -10,16 +10,33 @@ axios.defaults.withCredentials = true;
 // Import questions
 import questions from "../../../backend/questions.json";
 
+interface Evaluation {
+  score: number;
+  feedback: string;
+}
+
+interface Report {
+  final_score: number;
+  answers: string[];
+  evaluations: Evaluation[];
+  overall_feedback?: string;
+}
+
+interface RouteParams {
+  sessionId: string;
+  [key: string]: string | undefined;
+}
+
 export default function Report() {
-  const { sessionId } = useParams();
-  const [report, setReport] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { sessionId } = useParams<RouteParams>();
+  const [report, setReport] = useState<Report | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchReport() {
       try {
-        const res = await axios.get(`/summary/${sessionId}`);
+        const res = await axios.get<Report>(`/summary/${sessionId}`);
         setReport(res.data);
       } catch (error) {
         console.error('Error fetching report:', error);
@@ -55,14 +72,14 @@ export default function Report() {
     );
   }
 
-  const getScoreColor = (score) => {
+  const getScoreColor = (score: number): string => {
     if (score >= 90) return 'bg-green-100 text-green-800';
     if (score >= 70) return 'bg-blue-100 text-blue-800';
     if (score >= 50) return 'bg-yellow-100 text-yellow-800';
     return 'bg-red-100 text-red-800';
   };
 
-  const getScoreLabel = (score) => {
+  const getScoreLabel = (score: number): string => {
     if (score >= 90) return 'Excellent';
     if (score >= 70) return 'Good';
     if (score >= 50) return 'Fair';

@@ -7,18 +7,41 @@ axios.defaults.baseURL = 'http://192.168.29.192:8000';
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.withCredentials = true;
 
+interface Message {
+  q: string;
+  a: string;
+  score: number;
+  feedback: string;
+  related_concepts: string[];
+}
+
+interface InterviewResponse {
+  session_id: string;
+  question: string;
+}
+
+interface AnswerResponse {
+  evaluation: {
+    score: number;
+    feedback: string;
+    related_concepts: string[];
+  };
+  done: boolean;
+  next_question?: string;
+}
+
 export default function Interview() {
-  const [sessionId, setSessionId] = useState("");
-  const [question, setQuestion] = useState("");
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [sessionId, setSessionId] = useState<string>("");
+  const [question, setQuestion] = useState<string>("");
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   async function startInterview() {
     setIsLoading(true);
     try {
-      const res = await axios.post("/start-interview");
+      const res = await axios.post<InterviewResponse>("/start-interview");
       setSessionId(res.data.session_id);
       setQuestion(res.data.question);
     } catch (error) {
@@ -37,7 +60,7 @@ export default function Interview() {
     
     setIsLoading(true);
     try {
-      const res = await axios.post("/answer", {
+      const res = await axios.post<AnswerResponse>("/answer", {
         session_id: sessionId,
         answer: input
       });
@@ -52,7 +75,7 @@ export default function Interview() {
       if (res.data.done) {
         navigate(`/report/${sessionId}`);
       } else {
-        setQuestion(res.data.next_question);
+        setQuestion(res.data.next_question || "");
       }
       setInput("");
     } catch (error) {
@@ -75,7 +98,6 @@ export default function Interview() {
                 alt="Logo" 
                 className="h- w-30 mr-3"
               />
-             {/* <h1 className="text-xl font-bold text-gray-900">Excel Skills Assessment</h1> */}
             </div>
             <nav className="flex space-x-4">
               <a href="/" className="text-gray-600 hover:text-gray-900">Home</a>
@@ -121,7 +143,7 @@ export default function Interview() {
                     <textarea
                       className="w-full border-2 border-gray-300 rounded-lg p-4 min-h-[120px] focus:border-[rgb(245,108,59)] focus:ring-2 focus:ring-blue-200 outline-none transition-colors duration-200"
                       value={input}
-                      onChange={e => setInput(e.target.value)}
+                      onChange={(e) => setInput(e.target.value)}
                       placeholder="Type your answer here..."
                     />
                     <button
@@ -202,7 +224,7 @@ export default function Interview() {
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-gray-700 text-center text-gray-400">
-            <p>&copy; {new Date().getFullYear()} Coding Ninjas. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} Excel Skills Assessment. All rights reserved.</p>
           </div>
         </div>
       </footer>

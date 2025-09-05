@@ -1,7 +1,7 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Interview from "./pages/Interview";
-import Report from "./pages/Report";
+import Interview from "./pages/Interview.tsx";
+import Report from "./pages/Report.tsx";
 
 function App() {
   return (
