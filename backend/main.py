@@ -10,16 +10,15 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://coding-ninjas-ai.vercel.app"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Load questions
+
 with open("questions.json") as f:
     QUESTIONS = json.load(f)    
 
-# In-memory session store
 sessions = {}
 
 class AnswerRequest(BaseModel):
@@ -44,10 +43,8 @@ def answer_question(req: AnswerRequest):
         req.answer
     )
     
-    # Try to parse the evaluation as JSON
     try:
         if isinstance(evaluation, str):
-            # Extract JSON using regex first
             import re
             json_match = re.search(r'\{.*\}', evaluation)
             if json_match:
@@ -57,7 +54,6 @@ def answer_question(req: AnswerRequest):
         else:
             eval_json = evaluation
 
-        # Handle score that might be a range (e.g., "90-100")
         score_str = str(eval_json.get("score", "0"))
         if "-" in score_str:
             score = float(score_str.split("-")[1])  # Take the higher value
@@ -87,15 +83,12 @@ def answer_question(req: AnswerRequest):
 def get_summary(session_id: str):
     session = sessions[session_id]
     
-    # Calculate overall score
     total_score = 0
     feedback_points = []
     
     for idx, eval_str in enumerate(session["evaluations"]):
         try:
-            # Handle both string and dict evaluation formats
             if isinstance(eval_str, str):
-                # Extract JSON object from the string using regex
                 import re
                 json_match = re.search(r'\{.*\}', eval_str)
                 if json_match:
@@ -103,10 +96,8 @@ def get_summary(session_id: str):
                 else:
                     raise ValueError("No JSON found in evaluation string")
             else:
-                # If it's already a dict, use it directly
                 eval_data = eval_str
 
-            # Handle score that might be a range (e.g., "90-100")
             score_str = str(eval_data.get("score", "0"))
             if "-" in score_str:
                 score = float(score_str.split("-")[1])  # Take the higher value
@@ -118,14 +109,12 @@ def get_summary(session_id: str):
             feedback_points.append(f"Q{idx + 1} ({score}/100): {feedback}")
         except (json.JSONDecodeError, ValueError) as e:
             print(f"Error processing evaluation for Q{idx + 1}: {str(e)}")
-            # Instead of skipping, count it as 0
             feedback_points.append(f"Q{idx + 1} (0/100): Could not process evaluation")
     
     avg_score = round(total_score / len(session["evaluations"]) if session["evaluations"] else 0, 2)
     
     avg_score = round(total_score / len(session["evaluations"]) if session["evaluations"] else 0, 2)
     
-    # Generate overall feedback based on score
     overall_rating = "Outstanding" if avg_score >= 90 else \
                     "Excellent" if avg_score >= 80 else \
                     "Good" if avg_score >= 70 else \

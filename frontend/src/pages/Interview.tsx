@@ -2,7 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-// Configure axios defaults
 axios.defaults.baseURL = 'https://api.workdone247.com/'; 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.withCredentials = false;

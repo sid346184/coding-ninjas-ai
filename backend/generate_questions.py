@@ -103,12 +103,10 @@ knowledge_sections = {
     }
 }
 
-# Flatten questions into a list
 questions = []
 for section in knowledge_sections.values():
     questions.extend(section["questions"])
 
-# Write to questions.json
 with open("questions.json", "w") as f:
     json.dump(questions, f, indent=2)
 
